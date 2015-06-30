@@ -93,6 +93,23 @@ public class TelegramBot implements Bot {
         }
     }
 
+    public Message forwardMessage(Integer chatId, Integer fromChatId, Integer messageId) throws BotException {
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("chat_id", chatId);
+        parameters.put("from_chat_id", fromChatId);
+        parameters.put("message_id", messageId);
+
+        final String resultBody = sendAndHandleRequest(
+                Unirest.get(baseUrl + "forwardMessage")
+                        .queryString(parameters));
+
+        try {
+            return mapper.readValue(resultBody, Message.class);
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
+    }
+
     private String sendAndHandleRequest(BaseRequest request) throws BotException {
         JSONObject jsonResult = null;
         try {

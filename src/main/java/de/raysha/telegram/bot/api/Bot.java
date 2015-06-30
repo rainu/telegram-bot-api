@@ -71,4 +71,13 @@ public interface Bot {
      */
     public Message sendMessage(Integer chatId, String text, Boolean disableWebPagePreview, Integer replyToMessageId, Object replyMarkup) throws BotException;
 
+    /**
+     * Use this method to forward messages of any kind. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param fromChatId Unique identifier for the chat where the original message was sent — User or GroupChat id
+     * @param messageId Unique message identifier
+     * @return
+     */
+    public Message forwardMessage(Integer chatId, Integer fromChatId, Integer messageId) throws BotException;
 }
