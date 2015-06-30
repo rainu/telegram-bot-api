@@ -60,4 +60,14 @@ public class Audio {
     public void setFile_size(Integer file_size) {
         this.file_size = file_size;
     }
+
+    @Override
+    public String toString() {
+        return "Audio{" +
+                "file_id='" + file_id + '\'' +
+                ", duration=" + duration +
+                ", mime_type='" + mime_type + '\'' +
+                ", file_size=" + file_size +
+                '}';
+    }
 }
