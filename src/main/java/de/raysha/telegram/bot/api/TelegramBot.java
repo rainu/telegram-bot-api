@@ -214,6 +214,55 @@ public class TelegramBot implements Bot {
         }
     }
 
+    public Message sendDocument(Integer chatId, File document) throws BotException {
+        return sendDocument(chatId, document, null, null);
+    }
+
+    public Message sendDocument(Integer chatId, String document) throws BotException {
+        return sendDocument(chatId, document, null, null);
+    }
+
+    public Message sendDocument(Integer chatId, Object document, Integer replyToMessageId, Object replyMarkup) throws BotException {
+        checkReply(replyMarkup);
+
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("chat_id", chatId);
+
+        if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
+
+        if(replyMarkup != null) {
+            try {
+                parameters.put("reply_markup", mapper.writeValueAsString(replyMarkup));
+            } catch (IOException e) {
+                throw new BotException("Could not serialize reply markup!", e);
+            }
+        }
+
+        final String resultBody;
+
+        if(document instanceof String) {
+            parameters.put("document", document);
+
+            resultBody = sendAndHandleRequest(
+                    Unirest.get(baseUrl + "sendDocument")
+                            .queryString(parameters));
+        }else if(document instanceof File){
+            resultBody = sendAndHandleRequest(
+                    Unirest.post(baseUrl + "sendDocument")
+                            .queryString(parameters)
+                            .field("document", (File) document));
+
+        }else{
+            throw new IllegalArgumentException("The document must be a string or a file!");
+        }
+
+        try {
+            return mapper.readValue(resultBody, Message.class);
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
+    }
+
     private String sendAndHandleRequest(BaseRequest request) throws BotException {
         JSONObject jsonResult = null;
         try {

@@ -73,4 +73,15 @@ public class Document {
     public void setFile_size(Integer file_size) {
         this.file_size = file_size;
     }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "file_id='" + file_id + '\'' +
+                ", thumb=" + thumb +
+                ", file_name='" + file_name + '\'' +
+                ", mime_type='" + mime_type + '\'' +
+                ", file_size=" + file_size +
+                '}';
+    }
 }

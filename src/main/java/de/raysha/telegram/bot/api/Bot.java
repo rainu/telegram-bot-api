@@ -154,4 +154,38 @@ public interface Bot {
      */
     public Message sendAudio(Integer chatId, Object audio, Integer replyToMessageId, Object replyMarkup) throws BotException;
 
+    /**
+     * Use this method to send general files. On success, the sent Message is returned.
+     * Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param document File to send. Upload a new file using multipart/form-data.
+     * @return
+     */
+    public Message sendDocument(Integer chatId, File document) throws BotException;
+
+    /**
+     * Use this method to send general files. On success, the sent Message is returned.
+     * Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param document A file_id as String to resend a file that is already on the Telegram servers.
+     * @return
+     */
+    public Message sendDocument(Integer chatId, String document) throws BotException;
+
+    /**
+     * Use this method to send general files. On success, the sent Message is returned.
+     * Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param document File to send. You can either pass a file_id as String to resend a file that is
+     *                 already on the Telegram servers, or upload a new file using multipart/form-data.
+     * @param replyToMessageId If the message is a reply, ID of the original message
+     * @param replyMarkup Additional interface options. A JSON-serialized object for a custom reply keyboard,
+     *                    instructions to hide keyboard or to force a reply from the user.
+     * @return
+     */
+    public Message sendDocument(Integer chatId, Object document, Integer replyToMessageId, Object replyMarkup) throws BotException;
+
 }
