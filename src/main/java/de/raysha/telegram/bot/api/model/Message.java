@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import java.util.List;
 
 /**
@@ -29,86 +31,103 @@ public class Message {
     /**
      * Optional. For forwarded messages, sender of the original message
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private User forward_from;
 
     /**
      * Optional. For forwarded messages, date the original message was sent in Unix time
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Integer forward_date;
 
     /**
      * Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Message reply_to_message;
 
     /**
      * Optional. For text messages, the actual UTF-8 text of the message
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String text;
 
     /**
      * Optional. Message is an audio file, information about the file
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Audio audio;
 
     /**
      * Optional. Message is a general file, information about the file
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Document document;
 
     /**
      * Optional. Message is a photo, available sizes of the photo
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private List<PhotoSize> photo;
 
     /**
      * Optional. Message is a sticker, information about the sticker
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Sticker sticker;
 
     /**
      * Optional. Message is a video, information about the video
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Video video;
 
     /**
      * Optional. Message is a shared contact, information about the contact
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Contact contact;
 
     /**
      * Optional. Message is a shared location, information about the location
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Location location;
 
     /**
      * Optional. A new member was added to the group, information about them (this member may be bot itself)
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private User new_chat_participant;
 
     /**
      * Optional. A member was removed from the group, information about them (this member may be bot itself)
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private User left_chat_participant;
 
     /**
      * Optional. A group title was changed to this value
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String new_chat_title;
 
     /**
      * Optional. A group photo was change to this value
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private List<PhotoSize> new_chat_photo;
 
     /**
      * Optional. Informs that the group photo was deleted
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Boolean delete_chat_photo;
 
     /**
      * Optional. Informs that the group has been created
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Boolean group_chat_created;
 
     public Integer getMessage_id() {

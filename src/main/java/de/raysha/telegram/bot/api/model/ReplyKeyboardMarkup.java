@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import java.util.List;
 
 /**
@@ -21,11 +23,13 @@ public class ReplyKeyboardMarkup {
      * Defaults to false, in which case the custom keyboard is always of the same
      * height as the app's standard keyboard.
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Boolean resize_keyboard;
 
     /**
      * Optional. Requests clients to hide the keyboard as soon as it's been used. Defaults to false.
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Boolean one_time_keyboard;
 
     /**
@@ -33,6 +37,7 @@ public class ReplyKeyboardMarkup {
      * users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply
      * (has reply_to_message_id), sender of the original message.
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Boolean selective;
 
     public List<List<String>> getKeyboard() {
@@ -65,5 +70,15 @@ public class ReplyKeyboardMarkup {
 
     public void setSelective(Boolean selective) {
         this.selective = selective;
+    }
+
+    @Override
+    public String toString() {
+        return "ReplyKeyboardMarkup{" +
+                "keyboard=" + keyboard +
+                ", resize_keyboard=" + resize_keyboard +
+                ", one_time_keyboard=" + one_time_keyboard +
+                ", selective=" + selective +
+                '}';
     }
 }

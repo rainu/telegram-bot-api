@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * This object represents a sticker.
  */
@@ -27,6 +29,7 @@ public class Sticker {
     /**
      * Optional. File size
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Integer file_size;
 
     public String getFile_id() {

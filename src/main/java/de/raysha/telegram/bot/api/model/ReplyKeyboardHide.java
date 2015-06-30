@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * Upon receiving a message with this object, Telegram clients will hide the current custom
  * keyboard and display the default letter-keyboard. By default, custom keyboards are
@@ -22,6 +24,7 @@ public class ReplyKeyboardHide {
      * Targets: 1) users that are @mentioned in the text of the Message object;
      * 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Boolean selective;
 
     public Boolean getHide_keyboard() {

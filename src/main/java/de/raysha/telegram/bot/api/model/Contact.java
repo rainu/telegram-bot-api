@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * This object represents a phone contact.
  */
@@ -17,11 +19,13 @@ public class Contact {
     /**
      * Optional. Contact's last name
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String last_name;
 
     /**
      * Optional. Contact's user identifier in Telegram
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String user_id;
 
     public String getPhone_number() {

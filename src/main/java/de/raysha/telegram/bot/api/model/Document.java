@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * This object represents a general file (as opposed to photos and audio files).
  */
@@ -17,16 +19,19 @@ public class Document {
     /**
      * Optional. Original filename as defined by sender
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String file_name;
 
     /**
      * Optional. MIME type of the file as defined by sender
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String mime_type;
 
     /**
      * Optional. File size
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Integer file_size;
 
     public String getFile_id() {

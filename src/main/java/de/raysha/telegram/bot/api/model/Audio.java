@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * This object represents an audio file (voice note).
  */
@@ -18,11 +20,13 @@ public class Audio {
     /**
      * Optional. MIME type of the file as defined by sender
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String mime_type;
 
     /**
      * Optional. File size
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Integer file_size;
 
     public String getFile_id() {

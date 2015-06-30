@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * This object represents a video file.
  */
@@ -32,16 +34,19 @@ public class Video {
     /**
      * Optional. Mime type of a file as defined by sender
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String mime_type;
 
     /**
      * Optional. File size
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Integer file_size;
 
     /**
      * Optional. Text description of the video (usually empty)
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String caption;
 
     public String getFile_id() {

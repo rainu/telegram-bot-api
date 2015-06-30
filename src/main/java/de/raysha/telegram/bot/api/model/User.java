@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * This object represents a Telegram user or bot.
  */
@@ -18,11 +20,13 @@ public class User {
     /**
      * Optional. User's or bot's last name
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String last_name;
 
     /**
      * Optional. User's or bot's username
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private String username;
 
     public Integer getId() {

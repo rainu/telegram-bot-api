@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * Upon receiving a message with this object, Telegram clients will display a reply interface to the user
  * (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if
@@ -28,6 +30,7 @@ public class ForceReply {
      * @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id),
      * sender of the original message.
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Boolean selective;
 
     public Boolean getForce_reply() {

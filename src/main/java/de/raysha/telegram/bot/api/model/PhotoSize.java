@@ -1,5 +1,7 @@
 package de.raysha.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * This object represents one size of a photo or a file / sticker thumbnail.
  *
@@ -24,6 +26,7 @@ public class PhotoSize {
     /**
      * Optional. File size
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Integer file_size;
 
     public String getFile_id() {
