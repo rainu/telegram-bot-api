@@ -1,6 +1,7 @@
 package de.raysha.telegram.bot.api;
 
 import de.raysha.telegram.bot.api.exception.BotException;
+import de.raysha.telegram.bot.api.model.Message;
 import de.raysha.telegram.bot.api.model.Update;
 import de.raysha.telegram.bot.api.model.User;
 
@@ -40,4 +41,34 @@ public interface Bot {
      *                  Defaults to 0, i.e. usual short polling
      */
     public List<Update> getUpdates(Integer offset, Integer limit, Integer timeout) throws BotException;
+
+    /**
+     * Use this method to send text messages. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param text Text of the message to be sent
+     * @return
+     * @throws BotException
+     */
+    public Message sendMessage(Integer chatId, String text) throws BotException;
+
+
+    /**
+     * Use this method to send text messages. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param text Text of the message to be sent
+     * @param disableWebPagePreview <i>Optional</i> Disables link previews for links in this message
+     * @param replyToMessageId <i>Optional</i> If the message is a reply, ID of the original message
+     * @param replyMarkup <i>Optional</i> Can be
+     *                      {@link de.raysha.telegram.bot.api.model.ReplyKeyboardMarkup} or
+     *                      {@link de.raysha.telegram.bot.api.model.ReplyKeyboardHide} or
+     *                      {@link de.raysha.telegram.bot.api.model.ForceReply}.
+     *                      Additional interface options. A JSON-serialized object for a custom reply keyboard,
+     *                     instructions to hide keyboard or to force a reply from the user.
+     * @return
+     * @throws BotException
+     */
+    public Message sendMessage(Integer chatId, String text, Boolean disableWebPagePreview, Integer replyToMessageId, Object replyMarkup) throws BotException;
+
 }

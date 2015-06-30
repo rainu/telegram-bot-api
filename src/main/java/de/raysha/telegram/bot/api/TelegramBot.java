@@ -4,8 +4,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.BaseRequest;
 import de.raysha.telegram.bot.api.exception.BotException;
-import de.raysha.telegram.bot.api.model.Update;
-import de.raysha.telegram.bot.api.model.User;
+import de.raysha.telegram.bot.api.model.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
 
@@ -42,10 +41,53 @@ public class TelegramBot implements Bot {
                 Unirest.get(baseUrl + "getUpdates")
                     .queryString(parameters));
 
-        System.out.println(resultBody);
         try {
             return mapper.readValue(resultBody,
                     mapper.getTypeFactory().constructCollectionType(List.class, Update.class));
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
+    }
+
+    public Message sendMessage(Integer chatId, String text) throws BotException {
+        return sendMessage(chatId, text, null, null, null);
+    }
+
+
+    public Message sendMessage(Integer chatId, String text, Boolean disableWebPagePreview,
+                               Integer replyToMessageId, Object replyMarkup) throws BotException {
+
+        if(replyMarkup != null){
+            if(!(   replyMarkup instanceof ReplyKeyboardHide ||
+                    replyMarkup instanceof ReplyKeyboardMarkup ||
+                    replyMarkup instanceof ForceReply)){
+
+                throw new IllegalStateException("The replyMarkup must be on of the following classes: " +
+                    ReplyKeyboardHide.class.getName() + ", " +
+                    ReplyKeyboardMarkup.class.getName() + ", " +
+                    ForceReply.class.getName());
+            }
+        }
+
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("chat_id", chatId);
+        parameters.put("text", text);
+        if(disableWebPagePreview != null) parameters.put("disable_web_page_preview", disableWebPagePreview);
+        if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
+        if(replyMarkup != null) {
+            try {
+                parameters.put("reply_markup", mapper.writeValueAsString(replyMarkup));
+            } catch (IOException e) {
+                throw new BotException("Could not serialize reply markup!", e);
+            }
+        }
+
+        final String resultBody = sendAndHandleRequest(
+                Unirest.post(baseUrl + "sendMessage")
+                        .fields(parameters));
+
+        try {
+            return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
             throw new BotException("Could not deserialize response!", e);
         }
