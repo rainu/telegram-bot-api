@@ -8,6 +8,7 @@ import de.raysha.telegram.bot.api.model.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -57,17 +58,7 @@ public class TelegramBot implements Bot {
     public Message sendMessage(Integer chatId, String text, Boolean disableWebPagePreview,
                                Integer replyToMessageId, Object replyMarkup) throws BotException {
 
-        if(replyMarkup != null){
-            if(!(   replyMarkup instanceof ReplyKeyboardHide ||
-                    replyMarkup instanceof ReplyKeyboardMarkup ||
-                    replyMarkup instanceof ForceReply)){
-
-                throw new IllegalStateException("The replyMarkup must be on of the following classes: " +
-                    ReplyKeyboardHide.class.getName() + ", " +
-                    ReplyKeyboardMarkup.class.getName() + ", " +
-                    ForceReply.class.getName());
-            }
-        }
+        checkReply(replyMarkup);
 
         final Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("chat_id", chatId);
@@ -93,6 +84,20 @@ public class TelegramBot implements Bot {
         }
     }
 
+    private void checkReply(Object replyMarkup) {
+        if(replyMarkup != null){
+            if(!(   replyMarkup instanceof ReplyKeyboardHide ||
+                    replyMarkup instanceof ReplyKeyboardMarkup ||
+                    replyMarkup instanceof ForceReply)){
+
+                throw new IllegalStateException("The replyMarkup must be on of the following classes: " +
+                    ReplyKeyboardHide.class.getName() + ", " +
+                    ReplyKeyboardMarkup.class.getName() + ", " +
+                    ForceReply.class.getName());
+            }
+        }
+    }
+
     public Message forwardMessage(Integer chatId, Integer fromChatId, Integer messageId) throws BotException {
         final Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("chat_id", chatId);
@@ -102,6 +107,56 @@ public class TelegramBot implements Bot {
         final String resultBody = sendAndHandleRequest(
                 Unirest.get(baseUrl + "forwardMessage")
                         .queryString(parameters));
+
+        try {
+            return mapper.readValue(resultBody, Message.class);
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
+    }
+
+    public Message sendPhoto(Integer chatId, String photo) throws BotException {
+        return sendPhoto(chatId, photo, null, null, null);
+    }
+
+    public Message sendPhoto(Integer chatId, File photo) throws BotException {
+        return sendPhoto(chatId, photo, null, null, null);
+    }
+
+    public Message sendPhoto(Integer chatId, Object photo, String caption, Integer replyToMessageId, Object replyMarkup) throws BotException {
+        checkReply(replyMarkup);
+
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("chat_id", chatId);
+
+        if(caption != null) parameters.put("caption", caption);
+        if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
+
+        if(replyMarkup != null) {
+            try {
+                parameters.put("reply_markup", mapper.writeValueAsString(replyMarkup));
+            } catch (IOException e) {
+                throw new BotException("Could not serialize reply markup!", e);
+            }
+        }
+
+        final String resultBody;
+
+        if(photo instanceof String) {
+            parameters.put("photo", photo);
+
+            resultBody = sendAndHandleRequest(
+                    Unirest.get(baseUrl + "sendPhoto")
+                            .queryString(parameters));
+        }else if(photo instanceof File){
+            resultBody = sendAndHandleRequest(
+                    Unirest.post(baseUrl + "sendPhoto")
+                            .queryString(parameters)
+                            .field("photo", (File) photo));
+
+        }else{
+            throw new IllegalArgumentException("The photo must be a string or a file!");
+        }
 
         try {
             return mapper.readValue(resultBody, Message.class);

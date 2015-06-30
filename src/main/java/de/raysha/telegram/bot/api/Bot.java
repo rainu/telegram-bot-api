@@ -5,6 +5,7 @@ import de.raysha.telegram.bot.api.model.Message;
 import de.raysha.telegram.bot.api.model.Update;
 import de.raysha.telegram.bot.api.model.User;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -80,4 +81,36 @@ public interface Bot {
      * @return
      */
     public Message forwardMessage(Integer chatId, Integer fromChatId, Integer messageId) throws BotException;
+
+    /**
+     * Use this method to send photos. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param photo A file_id as String to resend a photo that is already on the Telegram servers
+     * @return
+     */
+    public Message sendPhoto(Integer chatId, String photo) throws BotException;
+
+    /**
+     * Use this method to send photos. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param photo Photo to send.
+     * @return
+     */
+    public Message sendPhoto(Integer chatId, File photo) throws BotException;
+
+    /**
+     * Use this method to send photos. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param photo Photo to send. You can either pass a file_id as String to resend a photo that is already on the
+     *              Telegram servers, or upload a new photo using multipart/form-data.
+     * @param caption Photo caption (may also be used when resending photos by file_id).
+     * @param replyToMessageId If the message is a reply, ID of the original message
+     * @param replyMarkup Additional interface options. A JSON-serialized object for a custom reply keyboard,
+     *                    instructions to hide keyboard or to force a reply from the user.
+     * @return
+     */
+    public Message sendPhoto(Integer chatId, Object photo, String caption, Integer replyToMessageId, Object replyMarkup) throws BotException;
 }

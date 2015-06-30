@@ -60,4 +60,14 @@ public class PhotoSize {
     public void setFile_size(Integer file_size) {
         this.file_size = file_size;
     }
+
+    @Override
+    public String toString() {
+        return "PhotoSize{" +
+                "file_id='" + file_id + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                ", file_size=" + file_size +
+                '}';
+    }
 }
