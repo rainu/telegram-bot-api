@@ -342,4 +342,20 @@ public interface Bot {
      * @return
      */
     public UserProfilePhotos getUserProfilePhotos(Integer userId, Integer offset, Integer limit) throws BotException;
+
+    /**
+     * Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an
+     * update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update.
+     * In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
+     * <br/><br/>
+     * <b>Notes</b>
+     * <ul>
+     * <li>You will not be able to receive updates using getUpdates for as long as an outgoing webhook is set up.ǘ
+     * <li>We currently do not support self-signed certificates.</li>
+     * <li>Ports currently supported for Webhooks: 443, 80, 88, 8443.</li>
+     * </ul>
+     * @param url HTTPS url to send updates to. Use an empty string to remove webhook integration
+     * @return
+     */
+    public Boolean setWebhook(String url) throws BotException;
 }

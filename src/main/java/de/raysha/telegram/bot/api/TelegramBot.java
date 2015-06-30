@@ -429,6 +429,18 @@ public class TelegramBot implements Bot {
         return "True".equalsIgnoreCase(resultBody);
     }
 
+    public Boolean setWebhook(String url) throws BotException {
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        if(url != null) parameters.put("url", url);
+
+        final String resultBody = sendAndHandleRequest(
+                Unirest.get(baseUrl + "setWebhook")
+                        .queryString(parameters));
+
+        System.out.println(resultBody);
+        return "True".equalsIgnoreCase(resultBody);
+    }
+
     private String sendAndHandleRequest(BaseRequest request) throws BotException {
         JSONObject jsonResult = null;
         try {
