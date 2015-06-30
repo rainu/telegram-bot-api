@@ -71,4 +71,15 @@ public class Sticker {
     public void setFile_size(Integer file_size) {
         this.file_size = file_size;
     }
+
+    @Override
+    public String toString() {
+        return "Sticker{" +
+                "file_id='" + file_id + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                ", thumb=" + thumb +
+                ", file_size=" + file_size +
+                '}';
+    }
 }

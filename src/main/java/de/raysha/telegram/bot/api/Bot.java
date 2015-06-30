@@ -188,4 +188,36 @@ public interface Bot {
      */
     public Message sendDocument(Integer chatId, Object document, Integer replyToMessageId, Object replyMarkup) throws BotException;
 
+    /**
+     * Use this method to send .webp stickers. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param sticker Sticker to send. Upload a new sticker using multipart/form-data.
+     * @return
+     */
+    public Message sendSticker(Integer chatId, File sticker) throws BotException;
+
+    /**
+     * Use this method to send .webp stickers. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param sticker A file_id as String to resend a sticker that is already on the Telegram servers.
+     * @return
+     */
+    public Message sendSticker(Integer chatId, String sticker) throws BotException;
+
+
+    /**
+     * Use this method to send .webp stickers. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param sticker Sticker to send. You can either pass a file_id as String to resend a sticker that is already
+     *                on the Telegram servers, or upload a new sticker using multipart/form-data.
+     * @param replyToMessageId If the message is a reply, ID of the original message
+     * @param replyMarkup Additional interface options. A JSON-serialized object for a custom reply keyboard,
+     *                    instructions to hide keyboard or to force a reply from the user.
+     * @return
+     */
+    public Message sendSticker(Integer chatId, Object sticker, Integer replyToMessageId, Object replyMarkup) throws BotException;
+
 }

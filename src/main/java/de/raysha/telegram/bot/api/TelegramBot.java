@@ -263,6 +263,55 @@ public class TelegramBot implements Bot {
         }
     }
 
+    public Message sendSticker(Integer chatId, File sticker) throws BotException {
+        return sendSticker(chatId, sticker, null, null);
+    }
+
+    public Message sendSticker(Integer chatId, String sticker) throws BotException {
+        return sendSticker(chatId, sticker, null, null);
+    }
+
+    public Message sendSticker(Integer chatId, Object sticker, Integer replyToMessageId, Object replyMarkup) throws BotException {
+        checkReply(replyMarkup);
+
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("chat_id", chatId);
+
+        if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
+
+        if(replyMarkup != null) {
+            try {
+                parameters.put("reply_markup", mapper.writeValueAsString(replyMarkup));
+            } catch (IOException e) {
+                throw new BotException("Could not serialize reply markup!", e);
+            }
+        }
+
+        final String resultBody;
+
+        if(sticker instanceof String) {
+            parameters.put("sticker", sticker);
+
+            resultBody = sendAndHandleRequest(
+                    Unirest.get(baseUrl + "sendSticker")
+                            .queryString(parameters));
+        }else if(sticker instanceof File){
+            resultBody = sendAndHandleRequest(
+                    Unirest.post(baseUrl + "sendSticker")
+                            .queryString(parameters)
+                            .field("sticker", (File) sticker));
+
+        }else{
+            throw new IllegalArgumentException("The sticker must be a string or a file!");
+        }
+
+        try {
+            return mapper.readValue(resultBody, Message.class);
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
+    }
+
     private String sendAndHandleRequest(BaseRequest request) throws BotException {
         JSONObject jsonResult = null;
         try {
