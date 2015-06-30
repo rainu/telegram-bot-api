@@ -396,6 +396,27 @@ public class TelegramBot implements Bot {
         return sendChatAction(chatId, action.name());
     }
 
+    public UserProfilePhotos getUserProfilePhotos(Integer userId) throws BotException {
+        return getUserProfilePhotos(userId, null, null);
+    }
+
+    public UserProfilePhotos getUserProfilePhotos(Integer userId, Integer offset, Integer limit) throws BotException {
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("user_id", userId);
+        if(offset != null) parameters.put("offset", offset);
+        if(limit != null) parameters.put("limit", limit);
+
+        final String resultBody = sendAndHandleRequest(
+                Unirest.get(baseUrl + "getUserProfilePhotos")
+                        .queryString(parameters));
+
+        try {
+            return mapper.readValue(resultBody, UserProfilePhotos.class);
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
+    }
+
     public Boolean sendChatAction(Integer chatId, String action) throws BotException {
         final Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("chat_id", chatId);

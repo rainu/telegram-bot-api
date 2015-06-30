@@ -32,4 +32,12 @@ public class UserProfilePhotos {
     public void setPhotos(List<List<PhotoSize>> photos) {
         this.photos = photos;
     }
+
+    @Override
+    public String toString() {
+        return "UserProfilePhotos{" +
+                "total_count=" + total_count +
+                ", photos=" + photos +
+                '}';
+    }
 }

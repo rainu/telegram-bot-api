@@ -4,6 +4,7 @@ import de.raysha.telegram.bot.api.exception.BotException;
 import de.raysha.telegram.bot.api.model.Message;
 import de.raysha.telegram.bot.api.model.Update;
 import de.raysha.telegram.bot.api.model.User;
+import de.raysha.telegram.bot.api.model.UserProfilePhotos;
 
 import java.io.File;
 import java.util.List;
@@ -322,4 +323,23 @@ public interface Bot {
      *               find_location for location data.
      */
     public Boolean sendChatAction(Integer chatId, ChatAction action) throws BotException;
+
+    /**
+     * Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
+     *
+     * @param userId Unique identifier of the target user
+     * @return
+     */
+    public UserProfilePhotos getUserProfilePhotos(Integer userId) throws BotException;
+
+
+    /**
+     * Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
+     *
+     * @param userId Unique identifier of the target user
+     * @param offset Sequential number of the first photo to be returned. By default, all photos are returned.
+     * @param limit Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.
+     * @return
+     */
+    public UserProfilePhotos getUserProfilePhotos(Integer userId, Integer offset, Integer limit) throws BotException;
 }
