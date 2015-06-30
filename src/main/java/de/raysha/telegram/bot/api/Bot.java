@@ -281,4 +281,45 @@ public interface Bot {
      */
     public Message sendLocation(Integer chatId, Float latitude, Float longitude, Integer replyToMessageId, Object replyMarkup) throws BotException;
 
+    /**
+     * Use this method when you need to tell the user that something is happening on the bot's side.
+     * The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
+     * <br /><br />
+     * <b>Example</b>: The ImageBot needs some time to process a request and upload the image.
+     * Instead of sending a text message along the lines of “Retrieving image, please wait…”,
+     * the bot may use sendChatAction with action = upload_photo.
+     * The user will see a “sending photo” status for the bot.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive:
+     *               typing for text messages, upload_photo for photos, record_video or upload_video for videos,
+     *               record_audio or upload_audio for audio files, upload_document for general files,
+     *               find_location for location data.
+     */
+    public Boolean sendChatAction(Integer chatId, String action) throws BotException;
+
+    /**
+     * This enum contains all possible chat actions.
+     */
+    public static enum ChatAction {
+        typing, upload_photo, record_video, upload_video, record_audio,
+        upload_audio, upload_document, find_location;
+    }
+
+    /**
+     * Use this method when you need to tell the user that something is happening on the bot's side.
+     * The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
+     * <br /><br />
+     * <b>Example</b>: The ImageBot needs some time to process a request and upload the image.
+     * Instead of sending a text message along the lines of “Retrieving image, please wait…”,
+     * the bot may use sendChatAction with action = upload_photo.
+     * The user will see a “sending photo” status for the bot.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive:
+     *               typing for text messages, upload_photo for photos, record_video or upload_video for videos,
+     *               record_audio or upload_audio for audio files, upload_document for general files,
+     *               find_location for location data.
+     */
+    public Boolean sendChatAction(Integer chatId, ChatAction action) throws BotException;
 }

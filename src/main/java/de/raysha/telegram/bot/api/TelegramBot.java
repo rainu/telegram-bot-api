@@ -392,6 +392,22 @@ public class TelegramBot implements Bot {
         }
     }
 
+    public Boolean sendChatAction(Integer chatId, ChatAction action) throws BotException {
+        return sendChatAction(chatId, action.name());
+    }
+
+    public Boolean sendChatAction(Integer chatId, String action) throws BotException {
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("chat_id", chatId);
+        parameters.put("action", action);
+
+        final String resultBody = sendAndHandleRequest(
+                Unirest.get(baseUrl + "sendChatAction")
+                    .queryString(parameters));
+
+        return "True".equalsIgnoreCase(resultBody);
+    }
+
     private String sendAndHandleRequest(BaseRequest request) throws BotException {
         JSONObject jsonResult = null;
         try {
