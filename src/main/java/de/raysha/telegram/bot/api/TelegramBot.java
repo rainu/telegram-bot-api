@@ -312,6 +312,55 @@ public class TelegramBot implements Bot {
         }
     }
 
+    public Message sendVideo(Integer chatId, File video) throws BotException {
+        return sendVideo(chatId, video, null, null);
+    }
+
+    public Message sendVideo(Integer chatId, String video) throws BotException {
+        return sendVideo(chatId, video, null, null);
+    }
+
+    public Message sendVideo(Integer chatId, Object video, Integer replyToMessageId, Object replyMarkup) throws BotException {
+        checkReply(replyMarkup);
+
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("chat_id", chatId);
+
+        if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
+
+        if(replyMarkup != null) {
+            try {
+                parameters.put("reply_markup", mapper.writeValueAsString(replyMarkup));
+            } catch (IOException e) {
+                throw new BotException("Could not serialize reply markup!", e);
+            }
+        }
+
+        final String resultBody;
+
+        if(video instanceof String) {
+            parameters.put("video", video);
+
+            resultBody = sendAndHandleRequest(
+                    Unirest.get(baseUrl + "sendVideo")
+                            .queryString(parameters));
+        }else if(video instanceof File){
+            resultBody = sendAndHandleRequest(
+                    Unirest.post(baseUrl + "sendVideo")
+                            .queryString(parameters)
+                            .field("video", (File) video));
+
+        }else{
+            throw new IllegalArgumentException("The video must be a string or a file!");
+        }
+
+        try {
+            return mapper.readValue(resultBody, Message.class);
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
+    }
+
     private String sendAndHandleRequest(BaseRequest request) throws BotException {
         JSONObject jsonResult = null;
         try {

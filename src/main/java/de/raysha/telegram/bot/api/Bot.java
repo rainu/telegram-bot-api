@@ -220,4 +220,40 @@ public interface Bot {
      */
     public Message sendSticker(Integer chatId, Object sticker, Integer replyToMessageId, Object replyMarkup) throws BotException;
 
+    /**
+     * Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document).
+     * On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size,
+     * this limit may be changed in the future.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param video Video to send. Upload a new video file using multipart/form-data.
+     * @return
+     */
+    public Message sendVideo(Integer chatId, File video) throws BotException;
+
+    /**
+     * Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document).
+     * On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size,
+     * this limit may be changed in the future.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param video A file_id as String to resend a video that is already on the Telegram servers.
+     * @return
+     */
+    public Message sendVideo(Integer chatId, String video) throws BotException;
+
+    /**
+     * Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document).
+     * On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size,
+     * this limit may be changed in the future.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param video Video to send. You can either pass a file_id as String to resend a video that is already on
+     *              the Telegram servers, or upload a new video file using multipart/form-data.
+     * @param replyToMessageId If the message is a reply, ID of the original message
+     * @param replyMarkup Additional interface options. A JSON-serialized object for a custom reply keyboard,
+     *                    instructions to hide keyboard or to force a reply from the user.
+     * @return
+     */
+    public Message sendVideo(Integer chatId, Object video, Integer replyToMessageId, Object replyMarkup) throws BotException;
 }

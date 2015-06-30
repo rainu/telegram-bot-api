@@ -112,4 +112,18 @@ public class Video {
     public void setCaption(String caption) {
         this.caption = caption;
     }
+
+    @Override
+    public String toString() {
+        return "Video{" +
+                "file_id='" + file_id + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                ", duration=" + duration +
+                ", thumb=" + thumb +
+                ", mime_type='" + mime_type + '\'' +
+                ", file_size=" + file_size +
+                ", caption='" + caption + '\'' +
+                '}';
+    }
 }
