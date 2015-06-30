@@ -256,4 +256,29 @@ public interface Bot {
      * @return
      */
     public Message sendVideo(Integer chatId, Object video, Integer replyToMessageId, Object replyMarkup) throws BotException;
+
+    /**
+     * Use this method to send point on the map. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param latitude Latitude of location
+     * @param longitude Longitude of location
+     * @return
+     */
+    public Message sendLocation(Integer chatId, Float latitude, Float longitude) throws BotException;
+
+
+    /**
+     * Use this method to send point on the map. On success, the sent Message is returned.
+     *
+     * @param chatId Unique identifier for the message recipient — User or GroupChat id
+     * @param latitude Latitude of location
+     * @param longitude Longitude of location
+     * @param replyToMessageId If the message is a reply, ID of the original message
+     * @param replyMarkup Additional interface options. A JSON-serialized object for a custom reply keyboard,
+     *                    instructions to hide keyboard or to force a reply from the user.
+     * @return
+     */
+    public Message sendLocation(Integer chatId, Float latitude, Float longitude, Integer replyToMessageId, Object replyMarkup) throws BotException;
+
 }

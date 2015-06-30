@@ -146,12 +146,12 @@ public class TelegramBot implements Bot {
             parameters.put("photo", photo);
 
             resultBody = sendAndHandleRequest(
-                    Unirest.get(baseUrl + "sendPhoto")
-                            .queryString(parameters));
+                    Unirest.post(baseUrl + "sendPhoto")
+                            .fields(parameters));
         }else if(photo instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendPhoto")
-                            .queryString(parameters)
+                            .fields(parameters)
                             .field("photo", (File) photo));
 
         }else{
@@ -195,12 +195,12 @@ public class TelegramBot implements Bot {
             parameters.put("audio", audio);
 
             resultBody = sendAndHandleRequest(
-                    Unirest.get(baseUrl + "sendAudio")
-                            .queryString(parameters));
+                    Unirest.post(baseUrl + "sendAudio")
+                            .fields(parameters));
         }else if(audio instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendAudio")
-                            .queryString(parameters)
+                            .fields(parameters)
                             .field("audio", (File) audio));
 
         }else{
@@ -244,12 +244,12 @@ public class TelegramBot implements Bot {
             parameters.put("document", document);
 
             resultBody = sendAndHandleRequest(
-                    Unirest.get(baseUrl + "sendDocument")
-                            .queryString(parameters));
+                    Unirest.post(baseUrl + "sendDocument")
+                            .fields(parameters));
         }else if(document instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendDocument")
-                            .queryString(parameters)
+                            .fields(parameters)
                             .field("document", (File) document));
 
         }else{
@@ -293,12 +293,12 @@ public class TelegramBot implements Bot {
             parameters.put("sticker", sticker);
 
             resultBody = sendAndHandleRequest(
-                    Unirest.get(baseUrl + "sendSticker")
-                            .queryString(parameters));
+                    Unirest.post(baseUrl + "sendSticker")
+                            .fields(parameters));
         }else if(sticker instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendSticker")
-                            .queryString(parameters)
+                            .fields(parameters)
                             .field("sticker", (File) sticker));
 
         }else{
@@ -342,17 +342,48 @@ public class TelegramBot implements Bot {
             parameters.put("video", video);
 
             resultBody = sendAndHandleRequest(
-                    Unirest.get(baseUrl + "sendVideo")
-                            .queryString(parameters));
+                    Unirest.post(baseUrl + "sendVideo")
+                            .fields(parameters));
         }else if(video instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendVideo")
-                            .queryString(parameters)
+                            .fields(parameters)
                             .field("video", (File) video));
 
         }else{
             throw new IllegalArgumentException("The video must be a string or a file!");
         }
+
+        try {
+            return mapper.readValue(resultBody, Message.class);
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
+    }
+
+    public Message sendLocation(Integer chatId, Float latitude, Float longitude) throws BotException {
+        return sendLocation(chatId, latitude, longitude, null, null);
+    }
+
+    public Message sendLocation(Integer chatId, Float latitude, Float longitude, Integer replyToMessageId, Object replyMarkup) throws BotException {
+        checkReply(replyMarkup);
+
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("chat_id", chatId);
+        parameters.put("latitude", latitude);
+        parameters.put("longitude", longitude);
+        if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
+        if(replyMarkup != null) {
+            try {
+                parameters.put("reply_markup", mapper.writeValueAsString(replyMarkup));
+            } catch (IOException e) {
+                throw new BotException("Could not serialize reply markup!", e);
+            }
+        }
+
+        final String resultBody = sendAndHandleRequest(
+                Unirest.post(baseUrl + "sendLocation")
+                        .fields(parameters));
 
         try {
             return mapper.readValue(resultBody, Message.class);
