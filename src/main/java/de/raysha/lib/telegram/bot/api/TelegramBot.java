@@ -1,10 +1,10 @@
-package de.raysha.telegram.bot.api;
+package de.raysha.lib.telegram.bot.api;
 
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.BaseRequest;
-import de.raysha.telegram.bot.api.exception.BotException;
-import de.raysha.telegram.bot.api.model.*;
+import de.raysha.lib.telegram.bot.api.exception.BotException;
+import de.raysha.lib.telegram.bot.api.model.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
 

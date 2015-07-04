@@ -1,4 +1,4 @@
-package de.raysha.telegram.bot.api.exception;
+package de.raysha.lib.telegram.bot.api.exception;
 
 public class BotException extends Exception {
 

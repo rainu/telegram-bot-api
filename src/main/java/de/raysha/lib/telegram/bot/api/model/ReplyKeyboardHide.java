@@ -1,4 +1,4 @@
-package de.raysha.telegram.bot.api.model;
+package de.raysha.lib.telegram.bot.api.model;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 

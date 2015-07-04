@@ -8,9 +8,9 @@
         <version>9</version>
     </parent>
 
-    <groupId>de.raysha.telegram.bot</groupId>
-    <artifactId>api</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <groupId>de.raysha.lib.telegram</groupId>
+    <artifactId>bot-api</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
     <name>telegram-bot-api</name>
     <description>

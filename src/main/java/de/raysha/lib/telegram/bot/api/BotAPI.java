@@ -1,10 +1,11 @@
-package de.raysha.telegram.bot.api;
+package de.raysha.lib.telegram.bot.api;
 
-import de.raysha.telegram.bot.api.exception.BotException;
-import de.raysha.telegram.bot.api.model.Message;
-import de.raysha.telegram.bot.api.model.Update;
-import de.raysha.telegram.bot.api.model.User;
-import de.raysha.telegram.bot.api.model.UserProfilePhotos;
+import de.raysha.lib.telegram.bot.api.exception.BotException;
+import de.raysha.lib.telegram.bot.api.model.*;
+import de.raysha.lib.telegram.bot.api.model.Message;
+import de.raysha.lib.telegram.bot.api.model.Update;
+import de.raysha.lib.telegram.bot.api.model.User;
+import de.raysha.lib.telegram.bot.api.model.UserProfilePhotos;
 
 import java.io.File;
 import java.util.List;
@@ -63,9 +64,9 @@ public interface BotAPI {
      * @param disableWebPagePreview <i>Optional</i> Disables link previews for links in this message
      * @param replyToMessageId <i>Optional</i> If the message is a reply, ID of the original message
      * @param replyMarkup <i>Optional</i> Can be
-     *                      {@link de.raysha.telegram.bot.api.model.ReplyKeyboardMarkup} or
-     *                      {@link de.raysha.telegram.bot.api.model.ReplyKeyboardHide} or
-     *                      {@link de.raysha.telegram.bot.api.model.ForceReply}.
+     *                      {@link ReplyKeyboardMarkup} or
+     *                      {@link ReplyKeyboardHide} or
+     *                      {@link ForceReply}.
      *                      Additional interface options. A JSON-serialized object for a custom reply keyboard,
      *                     instructions to hide keyboard or to force a reply from the user.
      * @return
