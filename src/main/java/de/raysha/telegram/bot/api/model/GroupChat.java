@@ -30,4 +30,12 @@ public class GroupChat {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Override
+    public String toString() {
+        return "GroupChat{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

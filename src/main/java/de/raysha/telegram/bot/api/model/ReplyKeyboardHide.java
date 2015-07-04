@@ -42,4 +42,12 @@ public class ReplyKeyboardHide {
     public void setSelective(Boolean selective) {
         this.selective = selective;
     }
+
+    @Override
+    public String toString() {
+        return "ReplyKeyboardHide{" +
+                "hide_keyboard=" + hide_keyboard +
+                ", selective=" + selective +
+                '}';
+    }
 }

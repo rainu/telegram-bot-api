@@ -10,9 +10,9 @@ import java.io.File;
 import java.util.List;
 
 /**
- * The Bot API is an HTTP-based interface created for developers keen on building bots for Telegram.
+ * The BotAPI is an HTTP-based interface created for developers keen on building bots for Telegram.
  */
-public interface Bot {
+public interface BotAPI {
 
     /**
      * A simple method for testing your bot's auth token. Requires no parameters.

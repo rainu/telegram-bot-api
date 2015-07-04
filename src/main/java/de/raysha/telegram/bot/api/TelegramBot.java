@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TelegramBot implements Bot {
+public class TelegramBot implements BotAPI {
     private final ObjectMapper mapper = new ObjectMapper();
     private final String baseUrl;
 

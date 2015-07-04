@@ -59,4 +59,14 @@ public class Contact {
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "phone_number='" + phone_number + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", user_id='" + user_id + '\'' +
+                '}';
+    }
 }

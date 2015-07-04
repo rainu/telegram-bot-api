@@ -4,9 +4,90 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+
     <groupId>de.raysha.telegram.bot</groupId>
     <artifactId>api</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <name>telegram-bot-api</name>
+    <description>
+        This is an java library for the Telegram-Bot-API.
+        The Bot-API is an HTTP-based interface created for
+        developers keen on building bots for Telegram.
+    </description>
+
+    <url>https://github.com/rainu/telegram-bot-api</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/rainu/telegram-bot-api.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/rainu/telegram-bot-api.git</developerConnection>
+        <url>http://github.com/rainu/telegram-bot-api</url>
+    </scm>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/rainu/telegram-bot-api/issues</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <id>rainu</id>
+            <name>Rainu</name>
+            <email>rainu@raysha.de</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <source>1.6</source>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>

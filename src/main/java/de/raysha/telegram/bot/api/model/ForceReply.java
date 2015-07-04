@@ -48,4 +48,12 @@ public class ForceReply {
     public void setSelective(Boolean selective) {
         this.selective = selective;
     }
+
+    @Override
+    public String toString() {
+        return "ForceReply{" +
+                "force_reply=" + force_reply +
+                ", selective=" + selective +
+                '}';
+    }
 }
