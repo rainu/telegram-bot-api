@@ -20,7 +20,6 @@ try{
   System.err.println("Could not get me!");
 }
 
-BotApi
 ```
 
 License
@@ -37,7 +36,7 @@ If you want to add ___telegram-bot-api___ to your maven project, you can add the
   <dependency>
     <groupId>de.raysha.lib.telegram</groupId>
     <artifactId>bot-api</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
   </dependency>
 ```
 
