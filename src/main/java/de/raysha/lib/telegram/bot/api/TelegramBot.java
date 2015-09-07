@@ -151,7 +151,7 @@ public class TelegramBot implements BotAPI {
         }else if(photo instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendPhoto")
-                            .fields(parameters)
+                            .queryString(parameters)
                             .field("photo", (File) photo));
 
         }else{
@@ -200,7 +200,7 @@ public class TelegramBot implements BotAPI {
         }else if(audio instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendAudio")
-                            .fields(parameters)
+                            .queryString(parameters)
                             .field("audio", (File) audio));
 
         }else{
@@ -249,7 +249,7 @@ public class TelegramBot implements BotAPI {
         }else if(document instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendDocument")
-                            .fields(parameters)
+                            .queryString(parameters)
                             .field("document", (File) document));
 
         }else{
@@ -298,7 +298,7 @@ public class TelegramBot implements BotAPI {
         }else if(sticker instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendSticker")
-                            .fields(parameters)
+                            .queryString(parameters)
                             .field("sticker", (File) sticker));
 
         }else{
@@ -347,7 +347,7 @@ public class TelegramBot implements BotAPI {
         }else if(video instanceof File){
             resultBody = sendAndHandleRequest(
                     Unirest.post(baseUrl + "sendVideo")
-                            .fields(parameters)
+                            .queryString(parameters)
                             .field("video", (File) video));
 
         }else{
