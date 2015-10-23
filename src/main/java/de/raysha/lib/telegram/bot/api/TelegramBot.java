@@ -1,29 +1,28 @@
 package de.raysha.lib.telegram.bot.api;
 
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.BaseRequest;
 import de.raysha.lib.telegram.bot.api.exception.BotException;
 import de.raysha.lib.telegram.bot.api.model.*;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class TelegramBot implements BotAPI {
     private final ObjectMapper mapper = new ObjectMapper();
-    private final String baseUrl;
+    private final RequestExecutor requestExecutor;
 
-    public TelegramBot(String token){
-        this.baseUrl = "https://api.telegram.org/bot" + token + "/";
+    public TelegramBot(String token) {
+        this(new UnirestRequestExecutor("https://api.telegram.org/bot" + token + "/"));
+    }
+
+    public TelegramBot(RequestExecutor requestExecutor) {
+        this.requestExecutor = requestExecutor;
     }
 
     public User getMe() throws BotException {
-        final String resultBody = sendAndHandleRequest(Unirest.get(baseUrl + "getMe"));
+        final String resultBody = requestExecutor.get("getMe", null);
 
         try {
             return mapper.readValue(resultBody, User.class);
@@ -38,9 +37,7 @@ public class TelegramBot implements BotAPI {
         if(limit != null) parameters.put("limit", limit);
         if(timeout != null) parameters.put("timeout", timeout);
 
-        final String resultBody = sendAndHandleRequest(
-                Unirest.get(baseUrl + "getUpdates")
-                    .queryString(parameters));
+        final String resultBody = requestExecutor.get("getUpdates", parameters);
 
         try {
             return mapper.readValue(resultBody,
@@ -73,9 +70,7 @@ public class TelegramBot implements BotAPI {
             }
         }
 
-        final String resultBody = sendAndHandleRequest(
-                Unirest.post(baseUrl + "sendMessage")
-                        .fields(parameters));
+        final String resultBody = requestExecutor.post("sendMessage", parameters);
 
         try {
             return mapper.readValue(resultBody, Message.class);
@@ -104,9 +99,7 @@ public class TelegramBot implements BotAPI {
         parameters.put("from_chat_id", fromChatId);
         parameters.put("message_id", messageId);
 
-        final String resultBody = sendAndHandleRequest(
-                Unirest.get(baseUrl + "forwardMessage")
-                        .queryString(parameters));
+        final String resultBody = requestExecutor.get("forwardMessage", parameters);
 
         try {
             return mapper.readValue(resultBody, Message.class);
@@ -145,14 +138,9 @@ public class TelegramBot implements BotAPI {
         if(photo instanceof String) {
             parameters.put("photo", photo);
 
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendPhoto")
-                            .fields(parameters));
+            resultBody = requestExecutor.post("sendPhoto", parameters);
         }else if(photo instanceof File){
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendPhoto")
-                            .queryString(parameters)
-                            .field("photo", (File) photo));
+            resultBody = requestExecutor.post("sendPhoto", parameters, "photo", (File) photo);
 
         }else{
             throw new IllegalArgumentException("The photo must be a string or a file!");
@@ -194,14 +182,9 @@ public class TelegramBot implements BotAPI {
         if(audio instanceof String) {
             parameters.put("audio", audio);
 
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendAudio")
-                            .fields(parameters));
+            resultBody = requestExecutor.post("sendAudio", parameters);
         }else if(audio instanceof File){
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendAudio")
-                            .queryString(parameters)
-                            .field("audio", (File) audio));
+            resultBody = requestExecutor.post("sendAudio", parameters, "audio", (File) audio);
 
         }else{
             throw new IllegalArgumentException("The audio must be a string or a file!");
@@ -243,14 +226,9 @@ public class TelegramBot implements BotAPI {
         if(document instanceof String) {
             parameters.put("document", document);
 
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendDocument")
-                            .fields(parameters));
+            resultBody = requestExecutor.post("sendDocument", parameters);
         }else if(document instanceof File){
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendDocument")
-                            .queryString(parameters)
-                            .field("document", (File) document));
+            resultBody = requestExecutor.post("sendDocument", parameters, "document", (File) document);
 
         }else{
             throw new IllegalArgumentException("The document must be a string or a file!");
@@ -292,14 +270,9 @@ public class TelegramBot implements BotAPI {
         if(sticker instanceof String) {
             parameters.put("sticker", sticker);
 
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendSticker")
-                            .fields(parameters));
+            resultBody = requestExecutor.post("sendSticker", parameters);
         }else if(sticker instanceof File){
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendSticker")
-                            .queryString(parameters)
-                            .field("sticker", (File) sticker));
+            resultBody = requestExecutor.post("sendSticker", parameters, "sticker", (File) sticker);
 
         }else{
             throw new IllegalArgumentException("The sticker must be a string or a file!");
@@ -341,14 +314,9 @@ public class TelegramBot implements BotAPI {
         if(video instanceof String) {
             parameters.put("video", video);
 
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendVideo")
-                            .fields(parameters));
+            resultBody = requestExecutor.post("sendVideo", parameters);
         }else if(video instanceof File){
-            resultBody = sendAndHandleRequest(
-                    Unirest.post(baseUrl + "sendVideo")
-                            .queryString(parameters)
-                            .field("video", (File) video));
+            resultBody = requestExecutor.post("sendVideo", parameters, "video", (File) video);
 
         }else{
             throw new IllegalArgumentException("The video must be a string or a file!");
@@ -381,9 +349,7 @@ public class TelegramBot implements BotAPI {
             }
         }
 
-        final String resultBody = sendAndHandleRequest(
-                Unirest.post(baseUrl + "sendLocation")
-                        .fields(parameters));
+        final String resultBody = requestExecutor.post("sendLocation", parameters);
 
         try {
             return mapper.readValue(resultBody, Message.class);
@@ -406,9 +372,7 @@ public class TelegramBot implements BotAPI {
         if(offset != null) parameters.put("offset", offset);
         if(limit != null) parameters.put("limit", limit);
 
-        final String resultBody = sendAndHandleRequest(
-                Unirest.get(baseUrl + "getUserProfilePhotos")
-                        .queryString(parameters));
+        final String resultBody = requestExecutor.get("getUserProfilePhotos", parameters);
 
         try {
             return mapper.readValue(resultBody, UserProfilePhotos.class);
@@ -422,9 +386,7 @@ public class TelegramBot implements BotAPI {
         parameters.put("chat_id", chatId);
         parameters.put("action", action);
 
-        final String resultBody = sendAndHandleRequest(
-                Unirest.get(baseUrl + "sendChatAction")
-                    .queryString(parameters));
+        final String resultBody = requestExecutor.get("sendChatAction", parameters);
 
         return "True".equalsIgnoreCase(resultBody);
     }
@@ -433,27 +395,10 @@ public class TelegramBot implements BotAPI {
         final Map<String, Object> parameters = new HashMap<String, Object>();
         if(url != null) parameters.put("url", url);
 
-        final String resultBody = sendAndHandleRequest(
-                Unirest.get(baseUrl + "setWebhook")
-                        .queryString(parameters));
+        final String resultBody = requestExecutor.get("setWebhook", parameters);
 
         System.out.println(resultBody);
         return "True".equalsIgnoreCase(resultBody);
     }
 
-    private String sendAndHandleRequest(BaseRequest request) throws BotException {
-        JSONObject jsonResult = null;
-        try {
-            jsonResult = request
-                    .asJson().getBody().getObject();
-        } catch (UnirestException e) {
-            throw new BotException("Could not get a response.", e);
-        }
-
-        if(jsonResult.get("ok").equals(false)){
-            throw new BotException(jsonResult.getString("description"));
-        }
-
-        return jsonResult.get("result").toString();
-    }
 }
