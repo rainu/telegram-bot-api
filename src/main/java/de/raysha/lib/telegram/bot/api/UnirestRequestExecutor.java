@@ -3,6 +3,7 @@ package de.raysha.lib.telegram.bot.api;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.BaseRequest;
+import de.raysha.lib.telegram.bot.api.exception.BotApiException;
 import de.raysha.lib.telegram.bot.api.exception.BotException;
 import org.json.JSONObject;
 
@@ -52,7 +53,10 @@ public class UnirestRequestExecutor implements RequestExecutor {
         }
 
         if(jsonResult.get("ok").equals(false)){
-            throw new BotException(jsonResult.getString("description"));
+            throw new BotApiException(
+                    jsonResult.optInt("error_code", -1),
+                    jsonResult.optString("error_type"),
+                    jsonResult.optString("description"));
         }
 
         return jsonResult.get("result").toString();
