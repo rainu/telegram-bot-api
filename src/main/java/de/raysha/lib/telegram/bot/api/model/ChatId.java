@@ -37,6 +37,11 @@ public class ChatId {
         if(id == null) throw new IllegalArgumentException("The id must not be null!");
     }
 
+    public Object getId(){
+        if(sId != null) return sId;
+        return iId;
+    }
+
     public String getsId() {
         return sId;
     }
@@ -47,8 +52,6 @@ public class ChatId {
 
     @Override
     public String toString() {
-        if(sId != null) return sId;
-
-        return "" + iId;
+        return "" + getId();
     }
 }

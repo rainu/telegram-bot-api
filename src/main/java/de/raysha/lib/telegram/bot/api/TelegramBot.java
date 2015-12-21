@@ -47,19 +47,20 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Message sendMessage(Integer chatId, String text) throws BotException {
-        return sendMessage(chatId, text, null, null, null);
+    public Message sendMessage(ChatId chatId, String text) throws BotException {
+        return sendMessage(chatId, text, null, null, null, null);
     }
 
 
-    public Message sendMessage(Integer chatId, String text, Boolean disableWebPagePreview,
-                               Integer replyToMessageId, Object replyMarkup) throws BotException {
+    public Message sendMessage(ChatId chatId, String text, ParseMode parseMode,
+                               Boolean disableWebPagePreview, Integer replyToMessageId, Object replyMarkup) throws BotException {
 
         checkReply(replyMarkup);
 
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("chat_id", chatId);
+        parameters.put("chat_id", chatId.getId());
         parameters.put("text", text);
+        if(parseMode != null) parameters.put("parse_mode", parseMode.name());
         if(disableWebPagePreview != null) parameters.put("disable_web_page_preview", disableWebPagePreview);
         if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
         if(replyMarkup != null) {
@@ -93,10 +94,10 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Message forwardMessage(Integer chatId, Integer fromChatId, Integer messageId) throws BotException {
+    public Message forwardMessage(ChatId chatId, ChatId fromChatId, Integer messageId) throws BotException {
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("chat_id", chatId);
-        parameters.put("from_chat_id", fromChatId);
+        parameters.put("chat_id", chatId.getId());
+        parameters.put("from_chat_id", fromChatId.getId());
         parameters.put("message_id", messageId);
 
         final String resultBody = requestExecutor.get("forwardMessage", parameters);
@@ -108,19 +109,19 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Message sendPhoto(Integer chatId, String photo) throws BotException {
+    public Message sendPhoto(ChatId chatId, String photo) throws BotException {
         return sendPhoto(chatId, photo, null, null, null);
     }
 
-    public Message sendPhoto(Integer chatId, File photo) throws BotException {
+    public Message sendPhoto(ChatId chatId, File photo) throws BotException {
         return sendPhoto(chatId, photo, null, null, null);
     }
 
-    public Message sendPhoto(Integer chatId, Object photo, String caption, Integer replyToMessageId, Object replyMarkup) throws BotException {
+    public Message sendPhoto(ChatId chatId, Object photo, String caption, Integer replyToMessageId, Object replyMarkup) throws BotException {
         checkReply(replyMarkup);
 
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("chat_id", chatId);
+        parameters.put("chat_id", chatId.getId());
 
         if(caption != null) parameters.put("caption", caption);
         if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
@@ -140,7 +141,7 @@ public class TelegramBot implements BotAPI {
 
             resultBody = requestExecutor.post("sendPhoto", parameters);
         }else if(photo instanceof File){
-            resultBody = requestExecutor.post("sendPhoto", parameters, "photo", (File) photo);
+            resultBody = requestExecutor.post("sendPhoto", parameters, "photo", (java.io.File) photo);
 
         }else{
             throw new IllegalArgumentException("The photo must be a string or a file!");
@@ -153,19 +154,19 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Message sendAudio(Integer chatId, File audio) throws BotException {
+    public Message sendAudio(ChatId chatId, File audio) throws BotException {
         return sendAudio(chatId, audio, null, null);
     }
 
-    public Message sendAudio(Integer chatId, String audio) throws BotException {
+    public Message sendAudio(ChatId chatId, String audio) throws BotException {
         return sendAudio(chatId, audio, null, null);
     }
 
-    public Message sendAudio(Integer chatId, Object audio, Integer replyToMessageId, Object replyMarkup) throws BotException {
+    public Message sendAudio(ChatId chatId, Object audio, Integer replyToMessageId, Object replyMarkup) throws BotException {
         checkReply(replyMarkup);
 
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("chat_id", chatId);
+        parameters.put("chat_id", chatId.getId());
 
         if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
 
@@ -184,7 +185,7 @@ public class TelegramBot implements BotAPI {
 
             resultBody = requestExecutor.post("sendAudio", parameters);
         }else if(audio instanceof File){
-            resultBody = requestExecutor.post("sendAudio", parameters, "audio", (File) audio);
+            resultBody = requestExecutor.post("sendAudio", parameters, "audio", (java.io.File) audio);
 
         }else{
             throw new IllegalArgumentException("The audio must be a string or a file!");
@@ -197,19 +198,19 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Message sendDocument(Integer chatId, File document) throws BotException {
+    public Message sendDocument(ChatId chatId, File document) throws BotException {
         return sendDocument(chatId, document, null, null);
     }
 
-    public Message sendDocument(Integer chatId, String document) throws BotException {
+    public Message sendDocument(ChatId chatId, String document) throws BotException {
         return sendDocument(chatId, document, null, null);
     }
 
-    public Message sendDocument(Integer chatId, Object document, Integer replyToMessageId, Object replyMarkup) throws BotException {
+    public Message sendDocument(ChatId chatId, Object document, Integer replyToMessageId, Object replyMarkup) throws BotException {
         checkReply(replyMarkup);
 
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("chat_id", chatId);
+        parameters.put("chat_id", chatId.getId());
 
         if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
 
@@ -228,7 +229,7 @@ public class TelegramBot implements BotAPI {
 
             resultBody = requestExecutor.post("sendDocument", parameters);
         }else if(document instanceof File){
-            resultBody = requestExecutor.post("sendDocument", parameters, "document", (File) document);
+            resultBody = requestExecutor.post("sendDocument", parameters, "document", (java.io.File) document);
 
         }else{
             throw new IllegalArgumentException("The document must be a string or a file!");
@@ -241,19 +242,19 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Message sendSticker(Integer chatId, File sticker) throws BotException {
+    public Message sendSticker(ChatId chatId, File sticker) throws BotException {
         return sendSticker(chatId, sticker, null, null);
     }
 
-    public Message sendSticker(Integer chatId, String sticker) throws BotException {
+    public Message sendSticker(ChatId chatId, String sticker) throws BotException {
         return sendSticker(chatId, sticker, null, null);
     }
 
-    public Message sendSticker(Integer chatId, Object sticker, Integer replyToMessageId, Object replyMarkup) throws BotException {
+    public Message sendSticker(ChatId chatId, Object sticker, Integer replyToMessageId, Object replyMarkup) throws BotException {
         checkReply(replyMarkup);
 
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("chat_id", chatId);
+        parameters.put("chat_id", chatId.getId());
 
         if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
 
@@ -272,7 +273,7 @@ public class TelegramBot implements BotAPI {
 
             resultBody = requestExecutor.post("sendSticker", parameters);
         }else if(sticker instanceof File){
-            resultBody = requestExecutor.post("sendSticker", parameters, "sticker", (File) sticker);
+            resultBody = requestExecutor.post("sendSticker", parameters, "sticker", (java.io.File) sticker);
 
         }else{
             throw new IllegalArgumentException("The sticker must be a string or a file!");
@@ -285,19 +286,19 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Message sendVideo(Integer chatId, File video) throws BotException {
+    public Message sendVideo(ChatId chatId, File video) throws BotException {
         return sendVideo(chatId, video, null, null);
     }
 
-    public Message sendVideo(Integer chatId, String video) throws BotException {
+    public Message sendVideo(ChatId chatId, String video) throws BotException {
         return sendVideo(chatId, video, null, null);
     }
 
-    public Message sendVideo(Integer chatId, Object video, Integer replyToMessageId, Object replyMarkup) throws BotException {
+    public Message sendVideo(ChatId chatId, Object video, Integer replyToMessageId, Object replyMarkup) throws BotException {
         checkReply(replyMarkup);
 
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("chat_id", chatId);
+        parameters.put("chat_id", chatId.getId());
 
         if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
 
@@ -316,7 +317,7 @@ public class TelegramBot implements BotAPI {
 
             resultBody = requestExecutor.post("sendVideo", parameters);
         }else if(video instanceof File){
-            resultBody = requestExecutor.post("sendVideo", parameters, "video", (File) video);
+            resultBody = requestExecutor.post("sendVideo", parameters, "video", (java.io.File) video);
 
         }else{
             throw new IllegalArgumentException("The video must be a string or a file!");
@@ -329,15 +330,15 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Message sendLocation(Integer chatId, Float latitude, Float longitude) throws BotException {
+    public Message sendLocation(ChatId chatId, Float latitude, Float longitude) throws BotException {
         return sendLocation(chatId, latitude, longitude, null, null);
     }
 
-    public Message sendLocation(Integer chatId, Float latitude, Float longitude, Integer replyToMessageId, Object replyMarkup) throws BotException {
+    public Message sendLocation(ChatId chatId, Float latitude, Float longitude, Integer replyToMessageId, Object replyMarkup) throws BotException {
         checkReply(replyMarkup);
 
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("chat_id", chatId);
+        parameters.put("chat_id", chatId.getId());
         parameters.put("latitude", latitude);
         parameters.put("longitude", longitude);
         if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
@@ -358,7 +359,7 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Boolean sendChatAction(Integer chatId, ChatAction action) throws BotException {
+    public Boolean sendChatAction(ChatId chatId, ChatAction action) throws BotException {
         return sendChatAction(chatId, action.name());
     }
 
@@ -381,9 +382,9 @@ public class TelegramBot implements BotAPI {
         }
     }
 
-    public Boolean sendChatAction(Integer chatId, String action) throws BotException {
+    public Boolean sendChatAction(ChatId chatId, String action) throws BotException {
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("chat_id", chatId);
+        parameters.put("chat_id", chatId.getId());
         parameters.put("action", action);
 
         final String resultBody = requestExecutor.get("sendChatAction", parameters);
@@ -401,4 +402,60 @@ public class TelegramBot implements BotAPI {
         return "True".equalsIgnoreCase(resultBody);
     }
 
+    /* REMOVE ME!!!!! */
+
+    @Override
+    public Message sendPhoto(ChatId chatId, java.io.File photo) throws BotException {
+        return null;
+    }
+
+    @Override
+    public Message sendAudio(ChatId chatId, java.io.File audio) throws BotException {
+        return null;
+    }
+
+    @Override
+    public Message sendAudio(ChatId chatId, Object audio, Integer duration, String performer, String title, Integer replyToMessageId, Object replyMarkup) throws BotException {
+        return null;
+    }
+
+    @Override
+    public Message sendDocument(ChatId chatId, java.io.File document) throws BotException {
+        return null;
+    }
+
+    @Override
+    public Message sendSticker(ChatId chatId, java.io.File sticker) throws BotException {
+        return null;
+    }
+
+    @Override
+    public Message sendVideo(ChatId chatId, java.io.File video) throws BotException {
+        return null;
+    }
+
+    @Override
+    public Message sendVideo(ChatId chatId, Object video, Integer duration, String caption, Integer replyToMessageId, Object replyMarkup) throws BotException {
+        return null;
+    }
+
+    @Override
+    public Message sendVoice(ChatId chatId, java.io.File video) throws BotException {
+        return null;
+    }
+
+    @Override
+    public Message sendVoice(ChatId chatId, String video) throws BotException {
+        return null;
+    }
+
+    @Override
+    public Message sendVoice(ChatId chatId, Object video, Integer duration, Integer replyToMessageId, Object replyMarkup) throws BotException {
+        return null;
+    }
+
+    @Override
+    public File getFile(String fileId) throws BotException {
+        return null;
+    }
 }

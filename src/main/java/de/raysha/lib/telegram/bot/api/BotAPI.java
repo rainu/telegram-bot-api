@@ -52,7 +52,9 @@ public interface BotAPI {
      */
     public Message sendMessage(ChatId chatId, String text) throws BotException;
 
-
+    public static enum ParseMode {
+        Markdown
+    }
     /**
      * Use this method to send text messages. On success, the sent {@link Message} is returned.
      *
@@ -74,7 +76,7 @@ public interface BotAPI {
      * @return
      * @throws BotException
      */
-    public Message sendMessage(ChatId chatId, String text, String parseMode, Boolean disableWebPagePreview, Integer replyToMessageId, Object replyMarkup) throws BotException;
+    public Message sendMessage(ChatId chatId, String text, ParseMode parseMode, Boolean disableWebPagePreview, Integer replyToMessageId, Object replyMarkup) throws BotException;
 
     /**
      * Use this method to forward messages of any kind. On success, the sent {@link Message} is returned.
