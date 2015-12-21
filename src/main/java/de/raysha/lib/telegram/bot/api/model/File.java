@@ -3,6 +3,9 @@ package de.raysha.lib.telegram.bot.api.model;
 import de.raysha.lib.telegram.bot.api.BotAPI;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * This object represents a file ready to be downloaded.
  * The file can be downloaded via the link https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;.
@@ -49,6 +52,14 @@ public class File {
 
     public void setFile_path(String file_path) {
         this.file_path = file_path;
+    }
+
+    public URL getDownloadUrl(String botToken){
+        try {
+            return new URL("https://api.telegram.org/file/bot" + botToken + "/" + getFile_path());
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException("Could not create URL. This should never happen!");
+        }
     }
 
     @Override

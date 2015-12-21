@@ -489,10 +489,17 @@ public class TelegramBot implements BotAPI {
         return "True".equalsIgnoreCase(resultBody);
     }
 
-    /* REMOVE ME!!!!! */
-
     @Override
     public de.raysha.lib.telegram.bot.api.model.File getFile(String fileId) throws BotException {
-        return null;
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("file_id", fileId);
+
+        final String resultBody = requestExecutor.get("getFile", parameters);
+
+        try {
+            return mapper.readValue(resultBody, de.raysha.lib.telegram.bot.api.model.File.class);
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
     }
 }

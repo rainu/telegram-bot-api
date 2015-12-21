@@ -29,6 +29,12 @@ public class PhotoSize {
     @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Integer file_size;
 
+    /**
+     * Optional. File path
+     */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    private String file_path;
+
     public String getFile_id() {
         return file_id;
     }
@@ -61,6 +67,14 @@ public class PhotoSize {
         this.file_size = file_size;
     }
 
+    public String getFile_path() {
+        return file_path;
+    }
+
+    public void setFile_path(String file_path) {
+        this.file_path = file_path;
+    }
+
     @Override
     public String toString() {
         return "PhotoSize{" +
@@ -68,6 +82,7 @@ public class PhotoSize {
                 ", width=" + width +
                 ", height=" + height +
                 ", file_size=" + file_size +
+                ", file_path='" + file_path + '\'' +
                 '}';
     }
 }
