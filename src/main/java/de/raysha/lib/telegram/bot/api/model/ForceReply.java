@@ -7,7 +7,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
  * (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if
  * you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
  *
- * Example: A poll bot for groups runs in privacy mode (only receives commands, replies to its messages and mentions).
+ * Example: A <a href="https://telegram.me/PollBot">poll bot</a> for groups runs in privacy mode (only receives commands, replies to its messages and mentions).
  * There could be two ways to create a new poll:
  *
  * Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2).

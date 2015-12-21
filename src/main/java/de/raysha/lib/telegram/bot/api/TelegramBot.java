@@ -4,7 +4,7 @@ import de.raysha.lib.telegram.bot.api.exception.BotException;
 import de.raysha.lib.telegram.bot.api.model.*;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

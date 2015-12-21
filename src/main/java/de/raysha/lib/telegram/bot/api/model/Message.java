@@ -24,9 +24,9 @@ public class Message {
     private Integer date;
 
     /**
-     * User or GroupChat Conversation the message belongs to -- user in case of a private message, GroupChat in case of a group
+     * Conversation the message belongs to
      */
-    private Object chat;
+    private Chat chat;
 
     /**
      * Optional. For forwarded messages, sender of the original message
@@ -83,6 +83,17 @@ public class Message {
     private Video video;
 
     /**
+     * Optional. Message is a voice message, information about the file
+     */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    private Voice voice;
+
+    /**
+     * Optional. Caption for the photo or video
+     */
+    private String caption;
+
+    /**
      * Optional. Message is a shared contact, information about the contact
      */
     @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
@@ -130,6 +141,30 @@ public class Message {
     @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Boolean group_chat_created;
 
+    /**
+     * Optional. Service message: the supergroup has been created
+     */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    private Boolean supergroup_chat_created;
+
+    /**
+     * Optional. Service message: the channel has been created
+     */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    private Boolean channel_chat_created;
+
+    /**
+     * Optional. The group has been migrated to a supergroup with the specified identifier, not exceeding 1e13 by absolute value
+     */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    private Integer migrate_to_chat_id;
+
+    /**
+     * Optional. The supergroup has been migrated from a group with the specified identifier, not exceeding 1e13 by absolute value
+     */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    private Integer migrate_from_chat_id;
+
     public Integer getMessage_id() {
         return message_id;
     }
@@ -154,11 +189,11 @@ public class Message {
         this.date = date;
     }
 
-    public Object getChat() {
+    public Chat getChat() {
         return chat;
     }
 
-    public void setChat(Object chat) {
+    public void setChat(Chat chat) {
         this.chat = chat;
     }
 
@@ -298,6 +333,54 @@ public class Message {
         this.group_chat_created = group_chat_created;
     }
 
+    public Voice getVoice() {
+        return voice;
+    }
+
+    public void setVoice(Voice voice) {
+        this.voice = voice;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public Boolean getSupergroup_chat_created() {
+        return supergroup_chat_created;
+    }
+
+    public void setSupergroup_chat_created(Boolean supergroup_chat_created) {
+        this.supergroup_chat_created = supergroup_chat_created;
+    }
+
+    public Boolean getChannel_chat_created() {
+        return channel_chat_created;
+    }
+
+    public void setChannel_chat_created(Boolean channel_chat_created) {
+        this.channel_chat_created = channel_chat_created;
+    }
+
+    public Integer getMigrate_to_chat_id() {
+        return migrate_to_chat_id;
+    }
+
+    public void setMigrate_to_chat_id(Integer migrate_to_chat_id) {
+        this.migrate_to_chat_id = migrate_to_chat_id;
+    }
+
+    public Integer getMigrate_from_chat_id() {
+        return migrate_from_chat_id;
+    }
+
+    public void setMigrate_from_chat_id(Integer migrate_from_chat_id) {
+        this.migrate_from_chat_id = migrate_from_chat_id;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -314,6 +397,8 @@ public class Message {
                 ", photo=" + photo +
                 ", sticker=" + sticker +
                 ", video=" + video +
+                ", voice=" + voice +
+                ", caption='" + caption + '\'' +
                 ", contact=" + contact +
                 ", location=" + location +
                 ", new_chat_participant=" + new_chat_participant +
@@ -322,6 +407,10 @@ public class Message {
                 ", new_chat_photo=" + new_chat_photo +
                 ", delete_chat_photo=" + delete_chat_photo +
                 ", group_chat_created=" + group_chat_created +
+                ", supergroup_chat_created=" + supergroup_chat_created +
+                ", channel_chat_created=" + channel_chat_created +
+                ", migrate_to_chat_id=" + migrate_to_chat_id +
+                ", migrate_from_chat_id=" + migrate_from_chat_id +
                 '}';
     }
 }

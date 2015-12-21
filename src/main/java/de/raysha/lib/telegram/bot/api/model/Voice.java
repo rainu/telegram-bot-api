@@ -3,9 +3,9 @@ package de.raysha.lib.telegram.bot.api.model;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
- * This object represents an audio file (voice note).
+ * This object represents a voice note.
  */
-public class Audio {
+public class Voice {
 
     /**
      * Unique identifier for this file
@@ -16,18 +16,6 @@ public class Audio {
      * Duration of the audio in seconds as defined by sender
      */
     private Integer duration;
-
-    /**
-     * Optional. Performer of the audio as defined by sender or by audio tags
-     */
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-    private String performer;
-
-    /**
-     * Optional. Title of the audio as defined by sender or by audio tags
-     */
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-    private String title;
 
     /**
      * Optional. MIME type of the file as defined by sender
@@ -57,22 +45,6 @@ public class Audio {
         this.duration = duration;
     }
 
-    public String getPerformer() {
-        return performer;
-    }
-
-    public void setPerformer(String performer) {
-        this.performer = performer;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getMime_type() {
         return mime_type;
     }
@@ -91,11 +63,9 @@ public class Audio {
 
     @Override
     public String toString() {
-        return "Audio{" +
+        return "Voice{" +
                 "file_id='" + file_id + '\'' +
                 ", duration=" + duration +
-                ", performer='" + performer + '\'' +
-                ", title='" + title + '\'' +
                 ", mime_type='" + mime_type + '\'' +
                 ", file_size=" + file_size +
                 '}';
