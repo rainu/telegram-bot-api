@@ -480,12 +480,23 @@ public class TelegramBot implements BotAPI {
 
     @Override
     public Boolean setWebhook(String url) throws BotException {
+        return setWebhook(url, null);
+    }
+
+    @Override
+    public Boolean setWebhook(String url, File certificate) throws BotException {
         final Map<String, Object> parameters = new HashMap<String, Object>();
+
         if(url != null) parameters.put("url", url);
 
-        final String resultBody = requestExecutor.get("setWebhook", parameters);
+        final String resultBody;
 
-        System.out.println(resultBody);
+        if(certificate == null) {
+            resultBody = requestExecutor.get("setWebhook", parameters);
+        }else{
+            resultBody = requestExecutor.post("setWebhook", parameters, "certificate", certificate);
+        }
+
         return "True".equalsIgnoreCase(resultBody);
     }
 

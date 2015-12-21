@@ -1,7 +1,16 @@
 package de.raysha.lib.telegram.bot.api;
 
 import de.raysha.lib.telegram.bot.api.exception.BotException;
-import de.raysha.lib.telegram.bot.api.model.*;
+import de.raysha.lib.telegram.bot.api.model.Audio;
+import de.raysha.lib.telegram.bot.api.model.ChatId;
+import de.raysha.lib.telegram.bot.api.model.Document;
+import de.raysha.lib.telegram.bot.api.model.ForceReply;
+import de.raysha.lib.telegram.bot.api.model.Message;
+import de.raysha.lib.telegram.bot.api.model.ReplyKeyboardHide;
+import de.raysha.lib.telegram.bot.api.model.ReplyKeyboardMarkup;
+import de.raysha.lib.telegram.bot.api.model.Update;
+import de.raysha.lib.telegram.bot.api.model.User;
+import de.raysha.lib.telegram.bot.api.model.UserProfilePhotos;
 
 import java.io.File;
 import java.util.List;
@@ -55,6 +64,7 @@ public interface BotAPI {
     public static enum ParseMode {
         Markdown
     }
+
     /**
      * Use this method to send text messages. On success, the sent {@link Message} is returned.
      *
@@ -408,6 +418,9 @@ public interface BotAPI {
      * Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an
      * update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update.
      * In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
+     * <br />
+     * If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL,
+     * e.g. https://www.example.com/&lt;token&gt;. Since nobody else knows your bot‘s token, you can be pretty sure it’s us.
      * <br/><br/>
      * <b>Notes</b>
      * <ul>
@@ -420,6 +433,28 @@ public interface BotAPI {
      * @return
      */
     public Boolean setWebhook(String url) throws BotException;
+
+    /**
+     * Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an
+     * update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update.
+     * In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
+     * <br />
+     * If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL,
+     * e.g. https://www.example.com/&lt;token&gt;. Since nobody else knows your bot‘s token, you can be pretty sure it’s us.
+     * <br/><br/>
+     * <b>Notes</b>
+     * <ul>
+     * <li>You will not be able to receive updates using getUpdates for as long as an outgoing webhook is set up.ǘ
+     * <li>We currently do not support self-signed certificates.</li>
+     * <li>Ports currently supported for Webhooks: 443, 80, 88, 8443.</li>
+     * </ul>
+     *
+     * @param url         HTTPS url to send updates to. Use an empty string to remove webhook integration
+     * @param certificate Upload your public key certificate so that the root certificate in use can be checked.
+     *                    See our <a href="https://core.telegram.org/bots/self-signed">self-signed guide</a> for details.
+     * @return
+     */
+    public Boolean setWebhook(String url, File certificate) throws BotException;
 
     /**
      * Use this method to get basic info about a file and prepare it for downloading.
