@@ -36,7 +36,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, User.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -53,7 +53,7 @@ public class TelegramBot implements BotAPI {
             return mapper.readValue(resultBody,
                     mapper.getTypeFactory().constructCollectionType(List.class, Update.class));
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -88,7 +88,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -118,7 +118,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -166,7 +166,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -217,7 +217,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -263,7 +263,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -310,7 +310,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -358,7 +358,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -406,7 +406,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -437,7 +437,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, Message.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -463,7 +463,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, UserProfilePhotos.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 
@@ -499,7 +499,7 @@ public class TelegramBot implements BotAPI {
         try {
             return mapper.readValue(resultBody, de.raysha.lib.telegram.bot.api.model.File.class);
         } catch (IOException e) {
-            throw new BotException("Could not deserialize response!", e);
+            throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
     }
 }
