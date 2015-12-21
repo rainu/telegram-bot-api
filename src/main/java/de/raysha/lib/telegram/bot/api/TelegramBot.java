@@ -316,20 +316,22 @@ public class TelegramBot implements BotAPI {
 
     @Override
     public Message sendVideo(ChatId chatId, File video) throws BotException {
-        return sendVideo(chatId, video, null, null);
+        return sendVideo(chatId, video, null, null, null, null);
     }
 
     @Override
     public Message sendVideo(ChatId chatId, String video) throws BotException {
-        return sendVideo(chatId, video, null, null);
+        return sendVideo(chatId, video, null, null, null, null);
     }
 
-    public Message sendVideo(ChatId chatId, Object video, Integer replyToMessageId, Object replyMarkup) throws BotException {
+    public Message sendVideo(ChatId chatId, Object video, Integer duration, String caption, Integer replyToMessageId, Object replyMarkup) throws BotException {
         checkReply(replyMarkup);
 
         final Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("chat_id", chatId.getId());
 
+        if(duration != null) parameters.put("duration", duration);
+        if(caption != null) parameters.put("caption", caption);
         if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
 
         if(replyMarkup != null) {
@@ -440,11 +442,6 @@ public class TelegramBot implements BotAPI {
     }
 
     /* REMOVE ME!!!!! */
-
-    @Override
-    public Message sendVideo(ChatId chatId, Object video, Integer duration, String caption, Integer replyToMessageId, Object replyMarkup) throws BotException {
-        return null;
-    }
 
     @Override
     public Message sendVoice(ChatId chatId, File video) throws BotException {
