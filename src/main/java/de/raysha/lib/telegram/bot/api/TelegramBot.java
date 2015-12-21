@@ -315,6 +315,54 @@ public class TelegramBot implements BotAPI {
     }
 
     @Override
+    public Message sendVoice(ChatId chatId, File voice) throws BotException {
+        return sendVoice(chatId, voice, null, null, null);
+    }
+
+    @Override
+    public Message sendVoice(ChatId chatId, String voice) throws BotException {
+        return sendVoice(chatId, voice, null, null, null);
+    }
+
+    @Override
+    public Message sendVoice(ChatId chatId, Object voice, Integer duration, Integer replyToMessageId, Object replyMarkup) throws BotException {
+        checkReply(replyMarkup);
+
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("chat_id", chatId.getId());
+
+        if(duration != null) parameters.put("duration", duration);
+        if(replyToMessageId != null) parameters.put("reply_to_message_id", replyToMessageId);
+
+        if(replyMarkup != null) {
+            try {
+                parameters.put("reply_markup", mapper.writeValueAsString(replyMarkup));
+            } catch (IOException e) {
+                throw new BotException("Could not serialize reply markup!", e);
+            }
+        }
+
+        final String resultBody;
+
+        if(voice instanceof String) {
+            parameters.put("voice", voice);
+
+            resultBody = requestExecutor.post("sendVoice", parameters);
+        }else if(voice instanceof File){
+            resultBody = requestExecutor.post("sendVoice", parameters, "voice", (File) voice);
+
+        }else{
+            throw new IllegalArgumentException("The voice must be a string or a file!");
+        }
+
+        try {
+            return mapper.readValue(resultBody, Message.class);
+        } catch (IOException e) {
+            throw new BotException("Could not deserialize response!", e);
+        }
+    }
+
+    @Override
     public Message sendVideo(ChatId chatId, File video) throws BotException {
         return sendVideo(chatId, video, null, null, null, null);
     }
@@ -442,21 +490,6 @@ public class TelegramBot implements BotAPI {
     }
 
     /* REMOVE ME!!!!! */
-
-    @Override
-    public Message sendVoice(ChatId chatId, File video) throws BotException {
-        return null;
-    }
-
-    @Override
-    public Message sendVoice(ChatId chatId, String video) throws BotException {
-        return null;
-    }
-
-    @Override
-    public Message sendVoice(ChatId chatId, Object video, Integer duration, Integer replyToMessageId, Object replyMarkup) throws BotException {
-        return null;
-    }
 
     @Override
     public de.raysha.lib.telegram.bot.api.model.File getFile(String fileId) throws BotException {
