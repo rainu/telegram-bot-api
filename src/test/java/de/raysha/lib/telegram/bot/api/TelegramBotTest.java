@@ -2,8 +2,15 @@ package de.raysha.lib.telegram.bot.api;
 
 import de.raysha.lib.telegram.bot.api.exception.BotException;
 import de.raysha.lib.telegram.bot.api.model.ChatId;
+import de.raysha.lib.telegram.bot.api.model.InlineQueryResult;
+import de.raysha.lib.telegram.bot.api.model.InlineQueryResultArticle;
+import de.raysha.lib.telegram.bot.api.model.InlineQueryResultGif;
+import de.raysha.lib.telegram.bot.api.model.InlineQueryResultMpeg4Gif;
+import de.raysha.lib.telegram.bot.api.model.InlineQueryResultPhoto;
+import de.raysha.lib.telegram.bot.api.model.InlineQueryResultVideo;
 import de.raysha.lib.telegram.bot.api.model.Message;
 import de.raysha.lib.telegram.bot.api.model.ReplyKeyboardMarkup;
+import de.raysha.lib.telegram.bot.api.model.Update;
 import de.raysha.lib.telegram.bot.api.model.User;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -210,8 +217,6 @@ public class TelegramBotTest {
         Integer duration = 5;
         Message result = bot.sendVideo(CHAT_ID, testVideo, duration, caption, null, null);
 
-        System.out.println(result);
-
         assertNotNull(result);
         assertNotNull(result.getVideo());
         assertNotNull(result.getVideo().getFile_id());
@@ -255,6 +260,35 @@ public class TelegramBotTest {
     public void setWebhook() throws BotException {
         assertTrue(bot.setWebhook("https://raysha.de/bot"));
         assertTrue(bot.setWebhook(null));
+    }
+
+    @Test
+    public void answerInlineQuery() throws BotException {
+        for(Update update : bot.getUpdates(null, null, null)){
+            if(update.getInline_query() != null){
+                try {
+                    bot.answerInlineQuery(update.getInline_query().getId(), buildInlineQueryResults());
+                } catch (BotException e) {
+                    if(!e.getMessage().contains("QUERY_ID_INVALID")){
+                        throw e;
+                    }
+                }
+            }
+        }
+    }
+
+    private List<InlineQueryResult> buildInlineQueryResults() {
+        List<InlineQueryResult> results = new ArrayList<InlineQueryResult>();
+
+        final String thumb_url = "https://upload.wikimedia.org/wikipedia/commons/7/70/Jpegartefakt90-20.jpg";
+
+        results.add(new InlineQueryResultArticle("Article title", "Article Message", null, true, "https://github.com/rainu/telegram-bot-api", false, "rainu@git", thumb_url, 10, 10));
+        results.add(new InlineQueryResultPhoto(thumb_url, thumb_url, 50, 50, "Test photo", "This is a test photo", "Test caption", "Photo message", null));
+        results.add(new InlineQueryResultGif("https://upload.wikimedia.org/wikipedia/commons/5/5a/Live_from_the_Moon_-_Impact!.gif", thumb_url, 100, 100, "Gif title", "Gif caption", "Gif Message", null, true));
+        results.add(new InlineQueryResultMpeg4Gif("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4", thumb_url, 100, 100, "Mpeg4 Title", "Mpeg4Caption", "Mpeg4 Message", null, true));
+        results.add(new InlineQueryResultVideo("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4", "video/mp4", "Video Message", null, false, 100, 100, 120,  thumb_url, "Video Title", "Video Description"));
+
+        return results;
     }
 
     private ReplyKeyboardMarkup buildReplyKeyboardMarkup() {

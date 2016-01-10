@@ -494,5 +494,6 @@ public interface BotAPI {
      *                      pagination. Offset length can’t exceed 64 bytes.
      * @return
      */
-    public Boolean answerInlineQuery(String inlineQueryId, List<InlineQueryResult> results, Integer cacheTime, Boolean isPersonal, String nextOffset) throws BotException;
+    public Boolean answerInlineQuery(String inlineQueryId, List<InlineQueryResult> results, Integer cacheTime,
+                                     Boolean isPersonal, String nextOffset) throws BotException;
 }
