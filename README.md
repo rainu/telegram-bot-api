@@ -36,7 +36,7 @@ If you want to add ___telegram-bot-api___ to your maven project, you can add the
   <dependency>
     <groupId>de.raysha.lib.telegram</groupId>
     <artifactId>bot-api</artifactId>
-    <version>2.0</version>
+    <version>2.1</version>
   </dependency>
 ```
 
