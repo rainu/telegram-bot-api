@@ -10,7 +10,7 @@
 
     <groupId>de.raysha.lib.telegram</groupId>
     <artifactId>bot-api</artifactId>
-    <version>2.1-SNAPSHOT</version>
+    <version>2.1</version>
 
     <name>telegram-bot-api</name>
     <description>
