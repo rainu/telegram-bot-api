@@ -3,6 +3,7 @@ package de.raysha.lib.telegram.bot.api;
 import de.raysha.lib.telegram.bot.api.exception.BotException;
 import de.raysha.lib.telegram.bot.api.model.ChatId;
 import de.raysha.lib.telegram.bot.api.model.ForceReply;
+import de.raysha.lib.telegram.bot.api.model.InlineQueryResult;
 import de.raysha.lib.telegram.bot.api.model.Message;
 import de.raysha.lib.telegram.bot.api.model.ReplyKeyboardHide;
 import de.raysha.lib.telegram.bot.api.model.ReplyKeyboardMarkup;
@@ -512,5 +513,32 @@ public class TelegramBot implements BotAPI {
         } catch (IOException e) {
             throw new BotException("Could not deserialize response! ResultBody:\n" + resultBody, e);
         }
+    }
+
+    @Override
+    public Boolean answerInlineQuery(String inlineQueryId, List<InlineQueryResult> results) throws BotException {
+        return answerInlineQuery(inlineQueryId, results, null, null, null);
+    }
+
+    @Override
+    public Boolean answerInlineQuery(String inlineQueryId, List<InlineQueryResult> results, Integer cacheTime,
+                                     Boolean isPersonal, String nextOffset) throws BotException {
+
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("inline_query_id", inlineQueryId);
+
+        try {
+            parameters.put("results", mapper.writeValueAsString(results));
+        } catch (IOException e) {
+            throw new BotException("Error occurs while serializing the list of results!", e);
+        }
+
+        if(cacheTime != null) parameters.put("cache_time", cacheTime);
+        if(isPersonal != null) parameters.put("is_personal", isPersonal);
+        if(nextOffset != null) parameters.put("next_offset", nextOffset);
+
+        final String resultBody = requestExecutor.get("answerInlineQuery", parameters);
+
+        return "True".equalsIgnoreCase(resultBody);
     }
 }

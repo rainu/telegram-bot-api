@@ -1,5 +1,7 @@
 package de.raysha.lib.telegram.bot.api.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * This object represents an incoming update.
  */
@@ -13,9 +15,16 @@ public class Update {
     private Integer update_id;
 
     /**
-     * New incoming message of any kind — text, photo, sticker, etc.
+     * Optional. New incoming message of any kind — text, photo, sticker, etc.
      */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     private Message message;
+
+    /**
+     * Optional. New incoming <a href="https://core.telegram.org/bots/api#inline-mode" >inline</a> query
+     */
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    private InlineQuery inline_query;
 
     public Integer getUpdate_id() {
         return update_id;
@@ -33,11 +42,20 @@ public class Update {
         this.message = message;
     }
 
+    public InlineQuery getInline_query() {
+        return inline_query;
+    }
+
+    public void setInline_query(InlineQuery inline_query) {
+        this.inline_query = inline_query;
+    }
+
     @Override
     public String toString() {
         return "Update{" +
                 "update_id=" + update_id +
                 ", message=" + message +
+                ", inline_query=" + inline_query +
                 '}';
     }
 }
